@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+    <script src="../frameworks/angular-1.4.0/angular.min.js"></script>
+    <script>
+        var app = angular.module("app",[]);
+        app.directive("stuTbl",function () {
+            return {
+                restrict:"E",
+                template:"<div>测试,{{msg}}<ng-transclude></ng-transclude></div>",
+                transclude:true,
+                scope:{
+                    msg:'@'
+                },
+                compile:function(tElement,tAttrs){
+                    //模板编译阶段
+                    console.log(tElement);
+                    console.log(tAttrs);
+                    //alert("compile");
+                    //链接阶段
+                    return function(scope,element,attrs){
+                        console.log("scope:",scope.msg);
+                        scope.msg = "change....";//？？？
+                        console.log("scope---:",scope.msg);
+                        element.find('h2').on("click",function(){
+                            alert("hello");
+                        });
+                        console.log(attrs);
+                        //alert("link");
+                    };
+                }
+
+            };
+        });
+    </script>
+</head>
+<body>
+<h1>学生信息列表</h1>
+    <stu-tbl msg = "angular">
+        <h2>学生信息列表</h2>
+    </stu-tbl>
+
+</body>
+</html>

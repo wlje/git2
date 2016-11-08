@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+    <style>
+        table{
+            border-collapse:collapse;
+            width:500px;
+        }
+        td,th{
+            border:1px solid #ccc;
+            text-align: center;
+        }
+    </style>
+    <script src="../frameworks/angular-1.4.0/angular.min.js"></script>
+    <script>
+        var app = angular.module("app",[]);
+        app.controller("mainCtrl",function ($scope) {
+            $scope.stus = [{
+                id:1001,
+                name:"terry",
+                age:22,
+                gender:"male"
+            },{
+                id:1002,
+                name:"larry",
+                age:21,
+                gender:"male"
+            },{
+                id:1003,
+                name:"vicky",
+                age:18,
+                gender:"female"
+            }];
+        });
+        app.directive("stuTbl",function () {
+            return {
+                restrict:"E",
+                templateUrl:"tbl.html",
+                transclude:true,
+                compile:function(tElement,tAttrs){
+                    //模板编译阶段
+
+                    //链接阶段
+                    return function(scope,element,attrs){
+                        element.find("tbody").on("mouseover",function(event){
+                            if(event.target.nodeName == "TD"){
+                                console.log(angular.element(event.target));
+                                angular.element(event.target).parent().css("background","#ccc")
+                            }
+                        });
+                        element.find("tbody").on("mouseout",function(event){
+                            if(event.target.nodeName == "TD"){
+                                console.log(angular.element(event.target));
+                                angular.element(event.target).parent().css("background","")
+                            }
+                        });
+
+                    };
+                }
+            };
+        });
+    </script>
+</head>
+<body ng-controller="mainCtrl">
+    <h1>学生信息列表</h1>
+
+    <stu-tbl msg="angular">
+        <h2>学生信息列表</h2>
+    </stu-tbl>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义过滤器</title>
+    <style>
+        table{
+            border-collapse:collapse;
+            width:500px;
+        }
+        td,th{
+            border:1px solid #ccc;
+            text-align: center;
+        }
+    </style>
+    <script src="../frameworks/angular-1.4.0/angular.min.js"></script>
+    <script>
+        var app = angular.module("app",[]);
+        app.controller("mainCtrl",function ($scope) {
+            $scope.msg1 = "hello";
+        })
+    </script>
+</head>
+<body ng-controller="mainCtrl">
+    msg1:{{msg1}}<br>
+    msg1:{{msg1.toUpperCase()}}<br>
+    msg1:{{msg1 | uppercase }}<br>
+</body>
+</html>
